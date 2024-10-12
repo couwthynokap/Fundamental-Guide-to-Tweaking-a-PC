@@ -90,66 +90,156 @@ reg add «HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-0
 - Динамический диапазон - Полный
 
 ## Настройка Nvidia Dwords
-- Автор [zipmishahl2](https://github.com/zipmishahl2/nvidia-tweaks)
 
 ```
 Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\System\GameConfigStore]
-"GameDVR_Enabled"=dword:00000000
-"GameDVR_FSEBehavior"=dword:00000002
-"GameDVR_FSEBehaviorMode"=dword:00000002
-"GameDVR_HonorUserFSEBehaviorMode"=dword:00000001
-"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
-"GameDVR_EFSEFeatureFlags"=dword:00000000
-"Win32_AutoGameModeDefaultProfile"=hex:01,00,01,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00
-"Win32_GameModeRelatedProcesses"=hex:01,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
- 00,00,00,00,00,00,00,00,00,00
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+"ExitLatency"=dword:00000001 
+"ExitLatencyCheckEnabled"=dword:00000001
+"Latency"=dword:00000001 
+"LatencyToleranceDefault"=dword:00000001 
+"LatencyToleranceFSVP"=dword:00000001 
+"LatencyTolerancePerfOverride"=dword:00000001 
+"LatencyToleranceScreenOffIR"=dword:00000001
+"RtlCapabilityCheckLatency"=dword:00000001
 
-[HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar]
-"AllowAutoGameMode"=dword:00000000
-"AutoGameModeEnabled"=dword:00000000
-"GamePanelStartupTipIndex"=dword:00000003
-"ShowStartupPanel"=dword:00000000
-"UseNexusForGameBarEnabled"=dword:00000000
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Power]
+"DefaultD3TransitionLatencyActivelyUsed"=dword:00000001 
+"DefaultD3TransitionLatencyIdleLongTime"=dword:00000001 
+"DefaultD3TransitionLatencyIdleMonitorOff"=dword:00000001 
+"DefaultD3TransitionLatencyIdleNoContext"=dword:00000001 
+"DefaultD3TransitionLatencyIdleShortTime"=dword:00000001 
+"DefaultD3TransitionLatencyIdleVeryLongTime"=dword:00000001 
+"DefaultLatencyToleranceIdle0"=dword:00000001 
+"DefaultLatencyToleranceIdle0MonitorOff"=dword:00000001 
+"DefaultLatencyToleranceIdle1"=dword:00000001
+"DefaultLatencyToleranceIdle1MonitorOff"=dword:00000001 
+"DefaultLatencyToleranceMemory"=dword:00000001 
+"DefaultLatencyToleranceNoContext"=dword:00000001 
+"DefaultLatencyToleranceNoContextMonitorOff"=dword:00000001 
+"DefaultLatencyToleranceOther"=dword:00000001 
+"DefaultLatencyToleranceTimerPeriod"=dword:00000001 
+"DefaultMemoryRefreshLatencyToleranceActivelyUsed"=dword:00000001 
+"DefaultMemoryRefreshLatencyToleranceMonitorOff"=dword:00000001 
+"DefaultMemoryRefreshLatencyToleranceNoContext"=dword:00000001 
+"Latency"=dword:00000001 
+"MaxIAverageGraphicsLatencyInOneBucket"=dword:00000001
+"MiracastPerfTrackGraphicsLatency"=dword:00000001 
+"MonitorLatencyTolerance"=dword:00000001 
+"MonitorRefreshLatencyTolerance"=dword:00000001 
+"TransitionLatency"=dword:00000001 
 
-[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
-"AppCaptureEnabled"=dword:00000000
+[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\GraphicsDrivers]
+"SchedulingDelay"=dword:00000000
+"DisableOverlays"=dword:00000001
+"SupportRuntimePowerManagement"=dword:00000000
+"RuntimePowerManagement"=dword:00000000
+"Protection"=dword:00000000
+"ProtectionLevel"=dword:00000000
+"OPMSetProtectionLevel"=dword:00000000
+"NumberOfIdleStates"=dword:00000000
+"EnableRuntimePowerManagement"=dword:00000000
+"DriverProtection"=dword:00000000
+"PoFxStartDevicePowerManagement"=dword:00000000
+"PoFxPowerControl"=dword:00000000
+"DxgkWaitForIdle"=dword:00000000
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
-"AllowGameDVR"=dword:00000000
+[HKEY_LOCAL_MACHINE\SOFTWARE\NVIDIA Corporation\Global\Startup\SendTelemetryData]
+@=dword:00000000
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR]
-"value"=dword:00000000
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\Global\Startup]
+"SendTelemetryData"=dword:00000000
 
-[-HKEY_CURRENT_USER\SYSTEM\GameConfigStore\Children]
-[-HKEY_CURRENT_USER\SYSTEM\GameConfigStore\Parents]
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS]
+"EnableGR535"=dword:00000000
+"EnableRID44231"=dword:00000000
+"EnableRID64640"=dword:00000000
+"EnableRID66610"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler]
+"DisableWriteCombining"=dword:00000001
+"DisablePreemption"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\Parameters]
+"DisablePreemption"=dword:00000001
+"DisableWriteCombining"=dword:00000001
+"EnablePerformanceMode"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
+"RMAERRForceDisable"=dword:00000001
+"RMNoECCFuseCheck"=dword:00000001
+"RMDisableRCOnDBE"=dword:00000001
+"RM1441072"=dword:00000001
+"RMAERRHandling"=dword:00000000
+"EnablePreemption"=dword:00000000
+"DisableWriteCombining"=dword:00000001
+"DisableAsyncPstates"=dword:00000001
+"DisableDynamicPstate"=dword:00000001
+"DisableOverclockedPstates"=dword:00000000
+"EnablePerformanceMode"=dword:00000001
+"RMEnableOverclockingAllPstates"=dword:00000001
+"RmProfilingAdminOnly"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0001]
+"RMAERRForceDisable"=dword:00000001
+"RMNoECCFuseCheck"=dword:00000001
+"RMDisableRCOnDBE"=dword:00000001
+"RM1441072"=dword:00000001
+"RMAERRHandling"=dword:00000000
+"EnablePreemption"=dword:00000000
+"DisableWriteCombining"=dword:00000001
+"DisableAsyncPstates"=dword:00000001
+"DisableDynamicPstate"=dword:00000001
+"DisableOverclockedPstates"=dword:00000000
+"EnablePerformanceMode"=dword:00000001
+"RMEnableOverclockingAllPstates"=dword:00000001
+"RmProfilingAdminOnly"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0002]
+"RMAERRForceDisable"=dword:00000001
+"RMNoECCFuseCheck"=dword:00000001
+"RMDisableRCOnDBE"=dword:00000001
+"RM1441072"=dword:00000001
+"RMAERRHandling"=dword:00000000
+"EnablePreemption"=dword:00000000
+"DisableWriteCombining"=dword:00000001
+"DisableAsyncPstates"=dword:00000001
+"DisableDynamicPstate"=dword:00000001
+"DisableOverclockedPstates"=dword:00000000
+"EnablePerformanceMode"=dword:00000001
+"RMEnableOverclockingAllPstates"=dword:00000001
+"RmProfilingAdminOnly"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0003]
+"RMAERRForceDisable"=dword:00000001
+"RMNoECCFuseCheck"=dword:00000001
+"RMDisableRCOnDBE"=dword:00000001
+"RM1441072"=dword:00000001
+"RMAERRHandling"=dword:00000000
+"EnablePreemption"=dword:00000000
+"DisableWriteCombining"=dword:00000001
+"DisableAsyncPstates"=dword:00000001
+"DisableDynamicPstate"=dword:00000001
+"DisableOverclockedPstates"=dword:00000000
+"EnablePerformanceMode"=dword:00000001
+"RMEnableOverclockingAllPstates"=dword:00000001
+"RmProfilingAdminOnly"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0004]
+"RMAERRForceDisable"=dword:00000001
+"RMNoECCFuseCheck"=dword:00000001
+"RMDisableRCOnDBE"=dword:00000001
+"RM1441072"=dword:00000001
+"RMAERRHandling"=dword:00000000
+"EnablePreemption"=dword:00000000
+"DisableWriteCombining"=dword:00000001
+"DisableAsyncPstates"=dword:00000001
+"DisableDynamicPstate"=dword:00000001
+"DisableOverclockedPstates"=dword:00000000
+"EnablePerformanceMode"=dword:00000001
+"RMEnableOverclockingAllPstates"=dword:00000001
+"RmProfilingAdminOnly"=dword:00000000
 ```
 
 ## Настройте NVIDIA Inspector
