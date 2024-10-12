@@ -1,6 +1,6 @@
-# Configure the NVIDIA Driver
+# Настройте драйвер NVIDIA
 
-- If you do not need the GeForce Experience, follow these steps, run the driver installer and go straight to the video driver setup. If you don't need it, unzip the driver with your archiver into a folder. Delete all files from the folder, leaving only the necessary files.
+Если вам не нужен GeForce Experience, выполните следующие шаги, запустите программу установки драйверов и перейдите к настройке видеодрайвера. Если драйвер вам не нужен, распакуйте его архиватором в папку. Удалите все файлы из папки, оставив только необходимые файлы.
 
 ```
 Display.Driver
@@ -9,88 +9,90 @@ EULA.txt
 ListDevices.txt
 setup.cfg
 setup.exe
- ```
-- Open the setup.cfg file with notepad and delete the following three lines:
-
- ```
-<file name="${{EulaHtmlFile}}"/>
-<file name="${{FunctionalConsentFile}}"/>
-<file name="${{PrivacyPolicyFile}}"/>
- ```
-
-- Open CMD and enter the command below to disable telemetry
-
-```bat
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\Global\Startup\SendTelemetryData" /t REG_DWORD /d "0" /f
 ```
 
-- Run the setup.exe file and install the driver.
+- Откройте файл setup.cfg с помощью блокнота и удалите следующие три строки:
 
-### Setting MSI Afterburner
+```
+<file name=«${{EulaHtmlFile}}» />
+<file name=«${{FunctionalConsentFile}}» />
+<file name=«${{PrivacyPolicyFile}}» />
+```
 
-- In MSI Afterburner program you need to turn off limits or increase them to maximum and turn on stable voltages, voltage monitoring and remember the video card model. After in the browser find the passport frequency boost and memorize it. 
+- Откройте CMD и введите следующую команду для отключения телеметрии
 
-- In the program MSI Afterburner enable key boost, for which you need to put the skin [EVGA SKIN](https://drive.google.com/file/d/1buaP5Gv7f3Jv3OPQzKWF6Q7fSvxft2a0/view?usp=sharing). To do this, download the archive with the skins folder and copy the default file to the skins folder. After rebooting the computer, select the skin and enable keyboost.
+```bat
+reg add «HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\Global\Startup\SendTelemetryData» /t REG_DWORD /d «0» /f
+```
 
-### Setting up the video driver
+- Запустите файл setup.exe и установите драйвер.
 
-- If you need the NVIDIA control panel to customize 3D settings, you may be missing data. There is a point in touching it only if you are using G-SYNC. All 3D settings are useless. Change the remaining settings in other sections as needed.
- ```
-Frequency lock / P-State0
- ```
-- We will force P-State 0 using a special parameter in the registry to reduce rendering time and jitter caused by frequency transitions.
- ```
+### Настройка MSI Afterburner
+
+В программе MSI Afterburner необходимо отключить ограничения или увеличить их до максимума, а также включить стабильные напряжения, мониторинг напряжений и запомнить модель видеокарты. После в браузере найдите паспортное повышение частоты и запомните его. 
+
+В программе MSI Afterburner включите key boost, для чего необходимо поставить скин [EVGA SKIN](https://drive.google.com/file/d/1buaP5Gv7f3Jv3OPQzKWF6Q7fSvxft2a0/view?usp=sharing). Для этого скачайте архив с папкой skins и скопируйте файл default в папку skins. После перезагрузки компьютера выберите скин и включите keyboost.
+
+### Настройка видеодрайвера
+
+Если вам нужна панель управления NVIDIA для настройки параметров 3D, возможно, вам не хватает данных. Трогать ее имеет смысл только в том случае, если вы используете G-SYNC. Все настройки 3D бесполезны. При необходимости измените остальные настройки в других разделах.
+
+### Блокировка частоты / P-State0
+
+- Мы заставим P-State 0 с помощью специального параметра в реестре, чтобы уменьшить время рендеринга и джиттер, вызванный переходами частоты.
+
+```
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
- ```
-- This path will not be identical in all cases, the number 0000 is specific to a particular video card and may be overwritten when installing drivers or moving the GPU to a different slot. To determine the appropriate reference number (e.g. 0000, 0001, 0002), open the registry editor and navigate to the path below, then look at the "DriverDesc or HardwareInformation.AdapterString" values, which should contain the adapter name of the graphics card, e.g. NVIDIA GeForce GTX 1050. (timecard).
+```
 
-- Once you know your path, then create a file of type REG.DWORD named DisableDynamicPstate and set the value to 1.
+Этот путь не будет идентичным во всех случаях, так как номер 0000 относится к конкретной видеокарте и может быть переписан при установке драйверов или перемещении GPU в другой слот. Чтобы определить подходящий номер ссылки (например, 0000, 0001, 0002), откройте редактор реестра и перейдите по указанному ниже пути, затем посмотрите на значения «DriverDesc или HardwareInformation.AdapterString», которые должны содержать имя адаптера видеокарты, например NVIDIA GeForce GTX 1050. (timecard).
+
+- Узнав путь, создайте файл типа REG.DWORD с именем DisableDynamicPstate и установите значение 1.
 
 ## Lock GPU Clocks/P-State 0
 
-Force P-State 0 with the [registry key](https://github.com/djdallmann/GamingPCSetup/blob/master/CONTENT/RESEARCH/WINDRIVERS/README.md#q-is-there-a-registry-setting-that-can-force-your-display-adapter-to-remain-at-its-highest-performance-state-pstate-p0) below (reboot required). Ensure to change the driver key to the one that corresponds to the correct NVIDIA GPU ([example](/assets/images/find-driver-key-example.png)). This mitigates the undesirable delay to execute new instructions when the unit enters a deeper power-saving state at the expense of higher idle temperatures and power consumption
+Принудительно включите P-State 0 с помощью [ключа реестра](https://github.com/djdallmann/GamingPCSetup/blob/master/CONTENT/RESEARCH/WINDRIVERS/README.md#q-is-there-a-registry-setting-that-can-force-your-display-adapter-to-remain-at-its-highest-performance-state-pstate-p0), приведенного ниже (требуется перезагрузка). Убедитесь, что ключ драйвера изменен на тот, который соответствует нужному графическому процессору NVIDIA ([пример](/assets/images/find-driver-key-example.png)). Это уменьшает нежелательную задержку выполнения новых инструкций, когда устройство переходит в состояние более глубокого энергосбережения за счет более высоких температур простоя и энергопотребления
 
-```bat
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "DisableDynamicPstate" /t REG_DWORD /d "1" /f
+``bat
+reg add «HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000» /v «DisableDynamicPstate» /t REG_DWORD /d «1» /f
+``
+
+# Настройте панель управления NVIDIA
+
+### Управление настройками 3D
+
+> Если вы настраиваете систему для общего использования, например, для работы или учебы, пропустите этот шаг, так как он не требуется.
+
+- Анизотропная фильтрация - Выкл.
+
+- Сглаживание - Гамма-коррекция - Выкл.
+
+- Режим низкой задержки - Вкл/Ультра
+
+> Если игра поддерживает режим NVIDIA Reflex Low Latency, мы рекомендуем использовать этот режим вместо режима Ultra Low Latency в драйвере. Однако если вы оставите оба режима включенными, режим Reflex Low Latency будет иметь более высокий приоритет автоматически ([1](https://www.nvidia.com/en-gb/geforce/news/reflex-low-latency-platform)).
+
+- Режим управления питанием - Предпочитает максимальную производительность
+
+- Размер шейдерного кэша - Неограниченно
+
+- Фильтрация текстур - Качество - Высокая производительность
+
+- Потоковая оптимизация - разгружает задачи обработки, связанные с GPU, на CPU ([1](https://tweakguides.pcgamingwiki.com/NVFORCE_8.html)). Обычно это вредит частоте кадров, поскольку отнимает процессорное время у приложения, работающего в реальном времени. Если вы решите включить эту настройку, вам также следует определить, нет ли у вас уже узкого места для процессора.
+
+- Убедитесь, что настройки не переопределяются для программ на вкладке ``Настройки программы``, например, параметр Image Sharpening для некоторых игр EAC.
+
+### Изменить разрешение
+
+- Выходной динамический диапазон - Полный
+
+### Настройка параметров цвета видео
+
+- Динамический диапазон - Полный
+
+## Настройка Nvidia Dwords
+- Автор [zipmishahl2](https://github.com/zipmishahl2/nvidia-tweaks)
+
 ```
-
-# Configure NVIDIA Control Panel
-
-### Manage 3D Settings
-
-> If you are configuring a system for general-purpose use such as for work or school, then skip this step as it is not required.
-
-- Anisotropic filtering - Off
-
-- Antialiasing - Gamma correction - Off
-
-- Low Latency Mode - On/Ultra
-
-> If a game supports the NVIDIA Reflex Low Latency mode, we recommend using that mode over the Ultra Low Latency mode in the driver. However, if you leave both on, the Reflex Low Latency mode will take higher priority automatically for you ([1](https://www.nvidia.com/en-gb/geforce/news/reflex-low-latency-platform))
-
-- Power management mode - Prefer maximum performance
-
-- Shader Cache Size - Unlimited
-
-- Texture filtering - Quality - High performance
-
-- Threaded Optimization - offloads GPU-related processing tasks on the CPU ([1](https://tweakguides.pcgamingwiki.com/NVFORCE_8.html)). It usually hurts frame pacing as it takes CPU time away from your real-time application. You should also determine whether you are already CPU bottlenecked if you do choose to enable the setting
-
-- Ensure that settings aren't being overridden for programs in the ``Program Settings`` tab, such as Image Sharpening for some EAC games
-
-### Change Resolution
-
-- Output dynamic range - Full
-
-### Adjust Video Color Settings
-
-- Dynamic range - Full
-
-## GameBAR/GameDVR Config optimize
-
-> [!CAUTION]
-> It is better to test these parameters
- ```
 Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\System\GameConfigStore]
@@ -101,34 +103,34 @@ Windows Registry Editor Version 5.00
 "GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
 "GameDVR_EFSEFeatureFlags"=dword:00000000
 "Win32_AutoGameModeDefaultProfile"=hex:01,00,01,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00
 "Win32_GameModeRelatedProcesses"=hex:01,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
-  00,00,00,00,00,00,00,00,00,00
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+ 00,00,00,00,00,00,00,00,00,00
 
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar]
 "AllowAutoGameMode"=dword:00000000
@@ -148,113 +150,9 @@ Windows Registry Editor Version 5.00
 
 [-HKEY_CURRENT_USER\SYSTEM\GameConfigStore\Children]
 [-HKEY_CURRENT_USER\SYSTEM\GameConfigStore\Parents]
- ```
+```
 
-## Setting up Nvidia Dwords
-- Author [zipmishahl2](https://github.com/zipmishahl2/nvidia-tweaks)
+## Настройте NVIDIA Inspector
+> 📊 **Не** слепо следуйте рекомендациям в этом разделе. **Проведите** бенчмарки указанных изменений, чтобы убедиться, что они приводят к положительному приросту производительности, поскольку каждая система ведет себя по-разному и изменения могут непреднамеренно ухудшить производительность.
 
- ```
-Windows Registry Editor Version 5.00
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\NVIDIA Corporation\Global\Startup\SendTelemetryData]
-@=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\Global\Startup]
-"SendTelemetryData"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS]
-"EnableGR535"=dword:00000000
-"EnableRID44231"=dword:00000000
-"EnableRID64640"=dword:00000000
-"EnableRID66610"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler]
-"DisableWriteCombining"=dword:00000001
-"DisablePreemption"=dword:00000001
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\nvlddmkm\Parameters]
-"DisablePreemption"=dword:00000001
-"DisableWriteCombining"=dword:00000001
-"EnablePerformanceMode"=dword:00000001
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
-"RMAERRForceDisable"=dword:00000001
-"RMNoECCFuseCheck"=dword:00000001
-"RMDisableRCOnDBE"=dword:00000001
-"RM1441072"=dword:00000001
-"RMAERRHandling"=dword:00000000
-"EnablePreemption"=dword:00000000
-"DisableWriteCombining"=dword:00000001
-"DisableAsyncPstates"=dword:00000001
-"DisableDynamicPstate"=dword:00000001
-"DisableOverclockedPstates"=dword:00000000
-"EnablePerformanceMode"=dword:00000001
-"RMEnableOverclockingAllPstates"=dword:00000001
-"RmProfilingAdminOnly"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0001]
-"RMAERRForceDisable"=dword:00000001
-"RMNoECCFuseCheck"=dword:00000001
-"RMDisableRCOnDBE"=dword:00000001
-"RM1441072"=dword:00000001
-"RMAERRHandling"=dword:00000000
-"EnablePreemption"=dword:00000000
-"DisableWriteCombining"=dword:00000001
-"DisableAsyncPstates"=dword:00000001
-"DisableDynamicPstate"=dword:00000001
-"DisableOverclockedPstates"=dword:00000000
-"EnablePerformanceMode"=dword:00000001
-"RMEnableOverclockingAllPstates"=dword:00000001
-"RmProfilingAdminOnly"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0002]
-"RMAERRForceDisable"=dword:00000001
-"RMNoECCFuseCheck"=dword:00000001
-"RMDisableRCOnDBE"=dword:00000001
-"RM1441072"=dword:00000001
-"RMAERRHandling"=dword:00000000
-"EnablePreemption"=dword:00000000
-"DisableWriteCombining"=dword:00000001
-"DisableAsyncPstates"=dword:00000001
-"DisableDynamicPstate"=dword:00000001
-"DisableOverclockedPstates"=dword:00000000
-"EnablePerformanceMode"=dword:00000001
-"RMEnableOverclockingAllPstates"=dword:00000001
-"RmProfilingAdminOnly"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0003]
-"RMAERRForceDisable"=dword:00000001
-"RMNoECCFuseCheck"=dword:00000001
-"RMDisableRCOnDBE"=dword:00000001
-"RM1441072"=dword:00000001
-"RMAERRHandling"=dword:00000000
-"EnablePreemption"=dword:00000000
-"DisableWriteCombining"=dword:00000001
-"DisableAsyncPstates"=dword:00000001
-"DisableDynamicPstate"=dword:00000001
-"DisableOverclockedPstates"=dword:00000000
-"EnablePerformanceMode"=dword:00000001
-"RMEnableOverclockingAllPstates"=dword:00000001
-"RmProfilingAdminOnly"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0004]
-"RMAERRForceDisable"=dword:00000001
-"RMNoECCFuseCheck"=dword:00000001
-"RMDisableRCOnDBE"=dword:00000001
-"RM1441072"=dword:00000001
-"RMAERRHandling"=dword:00000000
-"EnablePreemption"=dword:00000000
-"DisableWriteCombining"=dword:00000001
-"DisableAsyncPstates"=dword:00000001
-"DisableDynamicPstate"=dword:00000001
-"DisableOverclockedPstates"=dword:00000000
-"EnablePerformanceMode"=dword:00000001
-"RMEnableOverclockingAllPstates"=dword:00000001
-"RmProfilingAdminOnly"=dword:00000000
- ```
-
-## Configure NVIDIA Inspector
-> [!CAUTION]
-> 📊 **Do not** blindly follow the recommendations in this section. **Do** benchmarks of said changes to ensure that they result in positive performance gains, as every system behaves differently and changes can unintentionally degrade performance.
-
-- Download and extract [NVIDIA Profile Inspector](https://github.com/Orbmu2k/nvidiaProfileInspector) Please download my [personal profile]([https://drive.google.com/file/d/18PiWZ9HR8BPmGbdr5MyJzn8fwDlbCoxW/view?usp=sharing](https://github.com/couwthynokap/Fundamental-guide-to-tweaking-a-pc/blob/main/bin/base-nvidia-settings.nip)) and apply it.
+Скачайте и извлеките [NVIDIA Profile Inspector](https://github.com/Orbmu2k/nvidiaProfileInspector) Пожалуйста, скачайте мой [личный профиль]([https://drive.google.com/file/d/18PiWZ9HR8BPmGbdr5MyJzn8fwDlbCoxW/view?usp=sharing](https://github.com/couwthynokap/Fundamental-guide-to-tweaking-a-pc/blob/main/bin/base-nvidia-settings.nip)) и примените его.
