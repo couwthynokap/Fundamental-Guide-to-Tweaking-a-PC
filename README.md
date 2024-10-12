@@ -21,8 +21,9 @@
 
 > 1.  [Установка системы Windows](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/install%20windows.md)
 > 2.  [Настройка системы (OS)](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/system%20tweaking.md)
-> 3.  [Настройка видеокарты NVIDIA](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/configure-nvidia.md)
-> 4.  [Настройка видеокарты AMD](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/configure-amd.md)
+> 3.  [Конфигурация сети](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/network.md)
+> 4.  [Настройка видеокарты NVIDIA](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/configure-nvidia.md)
+> 5.  [Настройка видеокарты AMD](https://github.com/couwthynokap/Fundamental-Guide-to-Tweaking-a-PC/blob/main/materials/configure-amd.md)
 
 ## Гайд основан на исследованиях данных энтузиастов:
 - Отдельное спасибо энтузиастам, которые свободно делятся своими исследованиями, навыками программирования, настройками и туториалами, предоставляют тесты и техническую информацию [Amit](https://twitter.com/amitxv), [Bored](https://twitter.com/Bra1nlet), [Calypto](https://twitter.com/CaIypto), [CatGamerOP](https://twitter.com/CatGamerOP), [Chris Titus Tech](https://twitter.com/christitustech), [Melody](https://sites.google.com/view/melodystweaks/), [Imribiy](https://twitter.com/imribiy), [Phlegm](https://twitter.com/getggos), [TenForums](https://www.tenforums.com/), [Timecard](https://github.com/djdallmann/GamingPCSetup), [IIIЕX0III](https://discord.gg/qEWGUAGXCq), [Seniroad](https://github.com/Seniroad/Computer-RU-Setup-guide/tree/main), [div5064](https://shorturl.at/VXwBJ), [EXO](https://shorturl.at/VXwBJ), [BEYOND PERFORMANCE](https://discord.gg/xk3HKVPyef) и другие.
