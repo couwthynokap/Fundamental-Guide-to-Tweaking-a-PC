@@ -280,7 +280,7 @@ for %a in ("SysWOW64" "System32") do (if exist "%windir%\%~a\OneDriveSetup.exe" 
 - Если Windows Defender был отключен на этапе [Объединение параметров реестра](#импортирования-настроек-в-регистр), ``smartscreen.exe`` игнорирует ключ реестра, который контролирует его постоянный запуск в фоновом режиме на более поздних версиях Windows. Поэтому откройте ``cmd`` от имени ``TrustedInstaller`` с помощью команды ``C:\bin\MinSudo.exe --TrustedInstaller --Privileged`` и введите следующую команду для удаления файла:
 
     ```bat
-    taskkill /f /im smartscreen.exe > nul 2>&1 & ren C:\Windows\System32\smartscreen.exe smartscreen.exe
+    taskkill /f /im smartscreen.exe > nul 2>&1 & ren C:\Windows\System32\smartscreen.exe smartscreen.exee
     ```
 
 - Вы можете использовать диспетчер задач, чтобы проверить, не остались ли в фоновом режиме ненужные процессы, которые могут создавать проблемы. Если вы обнаружите такие процессы, рассмотрите возможность создания репозитория для их анализа и устранения.
