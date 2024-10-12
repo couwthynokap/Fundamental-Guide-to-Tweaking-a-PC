@@ -1,37 +1,37 @@
-# Configure the AMD Driver
+# Настройте драйвер AMD
 
-- Go to [website](https://www.amd.com/en/support), select your card, download the latest recommended (WHQL) driver, unzip it into a folder.
+- Перейдите на [веб-сайт](https://www.amd.com/en/support), выберите свою карту, скачайте последнюю версию рекомендованного (WHQL) драйвера, распакуйте его в папку.
 
-- Move ``Packages\Drivers\Display\XXXX_INF`` to the Desktop (the folder may be named differently in other driver versions). Delete all but the following:
+- Переместите папку ``Packages\Drivers\Display\XXXX_INF`` на рабочий стол (в других версиях драйвера папка может называться по-другому). Удалите все файлы, кроме следующих:
 
-- In the driver directory folder (mine is B381690 in the example above), move the ccc2_install.exe file to the Desktop. It will be used in the next step.
+- В папке каталога драйверов (в примере выше это B381690) переместите файл ccc2_install.exe на Рабочий стол. Он будет использоваться на следующем этапе.
 
-- Open the Notepad file and save it as ccc2_install.exe in the driver folder.
+- Откройте файл в блокноте и сохраните его как ccc2_install.exe в папке с драйвером.
 
-- Open Device Manager and install the driver by right-clicking on the display adapter, browse my computer for driver software and select the driver folder.
+- Откройте диспетчер устройств и установите драйвер, щелкнув правой кнопкой мыши на дисплейном адаптере, просмотрите мой компьютер в поисках драйверов и выберите папку с драйверами.
 
-- After installing the driver, unzip ccc2_install.exe with 7-Zip and run ``CN\cnext\cnext64\ccc-next64.msi`` to install the radeon software control panel.
+- После установки драйвера разархивируйте ccc2_install.exe с помощью 7-Zip и запустите ``CN\cnext\cnext64\ccc-next64.msi`` для установки панели управления ПО radeon.
 
-- Make sure to disable AMD bloatware services in win+r, services.msc
+- Убедитесь, что вы отключили службы AMD bloatware в win+r, services.msc
 
-### Configuring the AMD Control Panel
+### Настройка панели управления AMD
 
 ```
-Texture filtering quality - Performance
-Tessellation Mode - Override application settings
-Maximum tessellation level - Off.
+Качество фильтрации текстур - Производительность
+Режим тесселяции - Переопределить настройки приложения
+Максимальный уровень тесселяции - Выкл.
 ```
 ```
-FreeSync - could potentially increase input lag due to the extra processing, however it has supposedly improved over time, so feel free to test this yourself, your results may vary
-GPU Scaling - Off
-HDCP Support - Disable (required for DRM content)
+FreeSync - потенциально может увеличить задержку ввода из-за дополнительной обработки, однако со временем эта функция была улучшена, так что не стесняйтесь проверить это самостоятельно, ваши результаты могут отличаться
+Масштабирование GPU - Выключено
+Поддержка HDCP - Отключить (требуется для DRM-контента)
 ```
 ```
-Lock frequency/P-State 0
+Блокировка частоты/состояния - 0
 ```
 
-- Use OverdriveNTool or MorePowerTool to reduce render times and jitter caused by frequency transitions
+- Используйте OverdriveNTool или MorePowerTool для уменьшения времени рендеринга и джиттера, вызванного переходами частоты
 
 ### RadeonMod
 
-- Run the utility, select your video card, go to the 0000 panel, find the Power Saving tab, the Enable Ulps parameter and set it to 0.
+Запустите утилиту, выберите свою видеокарту, перейдите на панель 0000, найдите вкладку Power Saving, параметр Enable Ulps и установите его в 0.
