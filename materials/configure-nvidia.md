@@ -97,7 +97,6 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
 "ExitLatency"=dword:00000001 
 "ExitLatencyCheckEnabled"=dword:00000001
-"Latency"=dword:00000001 
 "LatencyToleranceDefault"=dword:00000001 
 "LatencyToleranceFSVP"=dword:00000001 
 "LatencyTolerancePerfOverride"=dword:00000001 
@@ -122,8 +121,7 @@ Windows Registry Editor Version 5.00
 "DefaultLatencyToleranceTimerPeriod"=dword:00000001 
 "DefaultMemoryRefreshLatencyToleranceActivelyUsed"=dword:00000001 
 "DefaultMemoryRefreshLatencyToleranceMonitorOff"=dword:00000001 
-"DefaultMemoryRefreshLatencyToleranceNoContext"=dword:00000001 
-"Latency"=dword:00000001 
+"DefaultMemoryRefreshLatencyToleranceNoContext"=dword:00000001  
 "MaxIAverageGraphicsLatencyInOneBucket"=dword:00000001
 "MiracastPerfTrackGraphicsLatency"=dword:00000001 
 "MonitorLatencyTolerance"=dword:00000001 
