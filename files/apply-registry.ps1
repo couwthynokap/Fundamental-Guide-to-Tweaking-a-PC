@@ -98,7 +98,7 @@ $entries = @{
     "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NDIS\Parameters" = @(
         @{
             "key_name" = "TrackNblOwner"
-            "value"    = 0
+            "value"    = 2
             "type"     = "REG_DWORD"
         }
     )
