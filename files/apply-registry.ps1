@@ -5,6 +5,235 @@ param(
 )
 
 $entries = @{
+    "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" = @(
+        @{
+            "key_name" = "MaintenanceDisabled"
+            "value"    = 1
+            "type"     = "REG_DWORD"
+        }
+    )
+    "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" = @(
+        @{
+            "key_name" = "NetworkThrottlingIndex"
+            "value"    = 10
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "SystemResponsiveness"
+            "value"    = 10
+            "type"     = "REG_DWORD"
+        }
+    )
+    "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" = @(
+        @{
+            "key_name" = "EnableVirtualization"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "EnableInstallerDetection"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "PromptOnSecureDesktop"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "EnableLUA"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "EnableSecureUIAPaths"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "ConsentPromptBehaviorAdmin"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "ValidateAdminCodeSignatures"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "EnableUIADesktopToggle"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "ConsentPromptBehaviorUser"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "FilterAdministratorToken"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+    )
+    "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\InputPersonalization" = @(
+        @{
+            "key_name" = "AllowInputPersonalization"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+    )
+    "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\InputPersonalization" = @(
+        @{
+            "key_name" = "RestrictImplicitInkCollection"
+            "value"    = 1
+            "type"     = "REG_DWORD"
+        }
+        @{
+            "key_name" = "RestrictImplicitTextCollection"
+            "value"    = 1
+            "type"     = "REG_DWORD"
+        }
+    )
+    "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\NDIS\Parameters" = @(
+        @{
+            "key_name" = "TrackNblOwner"
+            "value"    = 0
+            "type"     = "REG_DWORD"
+        }
+    )
+}
+
+foreach ($entry in $entries.GetEnumerator()) {
+    $keyPath = $entry.Key
+    foreach ($value in $entry.Value) {
+        $keyName = $value.key_name
+        $keyValue = $value.value
+        $keyType = $value.type
+
+        # Запись в реестр
+        if ($keyType -eq "REG_DWORD") {
+            New-ItemProperty -Path $keyPath -Name $keyName -Value $keyValue -PropertyType DWord -Force
+        } elseif ($keyType -eq "REG_SZ") {
+            New-ItemProperty -Path $keyPath -Name $keyName -Value $keyValue -PropertyType String -Force
+        }
+    }
+}
+$entries = @{
+    "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" = @(
+        @{
+            "key_name" = "DpcWatchdogProfileOffset"
+            "value"    = 0x00000000
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "DpcTimeout"
+            "value"    = 0x00000000
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IdealDpcRate"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "MaximumDpcQueueDepth"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "MinimumDpcRate"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "DpcWatchdogPeriod"
+            "value"    = 0x00000000
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "SerializeTimerExpiration"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "SplitLargeCaches"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "MaxDynamicTickDuration"
+            "value"    = 0x0000000A
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "MaximumSharedReadyQueueSize"
+            "value"    = 0x00000080
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "BufferSize"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IoQueueWorkItem"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IoQueueWorkItemToNode"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IoQueueWorkItemEx"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IoQueueThreadIrp"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "ExTryQueueWorkItem"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "ExQueueWorkItem"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "IoEnqueueIrp"
+            "value"    = 0x00000020
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "XMMIZeroingEnable"
+            "value"    = 0x00000000
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "UseNormalStack"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "UseNewEaBuffering"
+            "value"    = 0x00000001
+            "type"     = "REG_DWORD"
+        },
+        @{
+            "key_name" = "StackSubSystemStackSize"
+            "value"    = 0x00010000
+            "type"     = "REG_DWORD"
+        }
+    )
+}
+$entries = @{
     "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\EOSNotify"                                                                 = @(
         @{
             "key_name"    = "DiscontinueEOS"
