@@ -277,7 +277,7 @@ for %a in ("SysWOW64" "System32") do (if exist "%windir%\%~a\OneDriveSetup.exe" 
 
 - В разделе ``Система -> Дополнительные компоненты`` удалите все, что вам не нужно.
 
-- Если Windows Defender был отключен на этапе [Объединение параметров реестра](#импортирования-настроек-в-регистр), ``smartscreen.exe`` игнорирует ключ реестра, который контролирует его постоянный запуск в фоновом режиме на более поздних версиях Windows. Поэтому откройте ``cmd`` от имени ``TrustedInstaller`` с помощью команды ``C:\bin\MinSudo.exe --TrustedInstaller --Privileged`` и введите следующую команду для удаления файла:
+- Если Windows Defender был отключен на этапе [Объединение параметров реестра](#импортирования-настроек-в-регистр), ``smartscreen.exe`` игнорирует ключ реестра, который контролирует его постоянный запуск в фоновом режиме на более поздних версиях Windows. Поэтому откройте ``cmd`` от имени ``TrustedInstaller`` с помощью команды ``C:\files\MinSudo.exe --TrustedInstaller --Privileged`` и введите следующую команду для удаления файла:
 
     ```bat
     taskkill /f /im smartscreen.exe > nul 2>&1 & ren C:\Windows\System32\smartscreen.exe smartscreen.exee
@@ -474,7 +474,7 @@ powercfg /h off
 Запустите командную строку (CMD) и введите следующую команду для отключения [защиты процессов](https://docs.microsoft.com/en-us/powershell/module/processmitigations/set-processmitigation?view=windowsserver2019-ps). Чтобы просмотреть текущие настройки, используйте команду ``Get-ProcessMitigation -System`` в PowerShell.
 
 ```bat
-C:\bin\disable-process-mitigations.bat
+C:\files\disable-process-mitigations.bat
 ```
 
 ## 19. Настройка параметров управления памятью
@@ -1006,7 +1006,7 @@ powercfg /setacvalueindex scheme_current sub_processor 5d76a2ca-e8c0-402f-a133-2
 > [!IMPORTANT]
 > Начиная с версии 23h2 (май 2023 года) фоновые процессы ограничены в потреблении ресурсов ([1](https://blogs.windows.com/windowsdeveloper/2023/05/26/delivering-delightful-performance-for-more-than-one-billion-users-worldwide)). Влияние служб на производительность минимально. Я настоятельно рекомендую пропустить этот пункт или отключить только самые неиспользуемые службы вручную с помощью ServiWin, соблюдая зависимости.
 
-- Вы можете настроить список, отредактировав файл ``C:\bin\minimal-services.ini`` в текстовом редакторе. В этом файле есть комментарии, которые помогут вам определить, нужны ли вам те или иные службы. Например, пользователю с Ethernet не нужны службы Wi-Fi. Если вы планируете редактировать ``minimal-services.ini``, ознакомьтесь с [синтаксисом файла конфигурации](https://github.com/valleyofdoom/service-list-builder).
+- Вы можете настроить список, отредактировав файл ``C:\files\minimal-services.ini`` в текстовом редакторе. В этом файле есть комментарии, которые помогут вам определить, нужны ли вам те или иные службы. Например, пользователю с Ethernet не нужны службы Wi-Fi. Если вы планируете редактировать ``minimal-services.ini``, ознакомьтесь с [синтаксисом файла конфигурации](https://github.com/valleyofdoom/service-list-builder).
 
 - [Настройте статический IP-адрес](https://www.youtube.com/watch?t=36&v=5iRp1Nug0PU). Это необходимо, так как мы будем отключать службы, которые расходуют ресурсы, на которые полагается DHCP.
 
@@ -1023,7 +1023,7 @@ powercfg /setacvalueindex scheme_current sub_processor 5d76a2ca-e8c0-402f-a133-2
 - Используйте следующую команду для сборки скриптов в папке ``build``. Переместите папку сборки в безопасное место, например, ``C:\``, и не передавайте её другим людям, так как она специфична для вашей системы. Учтите, что для запуска пакетного скрипта требуется NSudo с опцией ``Enable All Privileges``.
 
     ```bat
-    service-list-builder.exe --config C:\bin\minimal-services.ini
+    service-list-builder.exe --config C:\files\minimal-services.ini
     ```
 
     - Если появляется предупреждение о службах, не относящихся к Windows, оцените службы в предупреждении, чтобы определить, хотите ли вы оставить их включенными, отредактировав конфигурационный файл, или отключить их с помощью аргумента ``-disable_service_warning``. Например, ``NVIDIA Display Container LS`` может появиться в предупреждении, поскольку это не служба Windows, но отключение её может быть целесообразным, если вам не нужен доступ к панели управления после запуска ``Services-Disable.bat``. В этом случае использование аргумента для игнорирования предупреждения будет уместным. Другой пример - ``vgc``, который необходим для античита Valorant, поэтому вы не захотите отключать его, и будет разумно добавить его в ``enabled_services`` в конфигурации, так как это служба пользовательского режима.
