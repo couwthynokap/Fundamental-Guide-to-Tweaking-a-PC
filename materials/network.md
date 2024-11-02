@@ -24,206 +24,84 @@
 
 - **Чрезмерная буферизация сети** может привести к увеличению задержки и джиттера, а также к снижению пропускной способности. Можно выполнить тест на чрезмерную [сетевую буферизацию](https://www.waveform.com/tools/bufferbloat).
 
-## 6. Настройки сетевого адаптера
+## 6. Настройка сетевых адаптеров Intel и Realtek
 
->**⚠**
-> Настройки разгрузки в сетевых картах позволяют делегировать определенные функции обработки пакетов, что снижает нагрузку на процессор. Это, в свою очередь, позволяет выделить больше процессорного времени для других задач и игр, улучшая общую производительность системы.
+Сетевые адаптеры играют важную роль в обеспечении стабильного и быстрого соединения с интернетом. В этом руководстве мы рассмотрим настройки сетевых адаптеров Intel и Realtek, а также их функциональные возможности и отличия. Следует отметить, что сетевые адаптеры Realtek часто уступают адаптерам Intel по производительности и функциональности.
 
-### Рекомендации для сетевых адаптеров Realtek и Intel
+### 1. Общая информация о сетевых адаптерах
 
-Для оптимизации работы сетевого адаптера Realtek выполните следующий скрипт в командной строке с правами администратора:
+- **Сетевые адаптеры Intel**: Эти адаптеры известны своей высокой производительностью, надежностью и поддержкой современных технологий. Они предлагают множество функций, которые помогают оптимизировать использование энергии и улучшить производительность.
 
-```bat
-@echo off
-:: Ensure admin privileges
-fltmc >nul 2>&1 || (
-    echo Administrator privileges are required.
-    PowerShell Start -Verb RunAs '%0' 2> nul || (
-        echo Right-click on the script and select "Run as administrator".
-        pause & exit 1
-    )
-    exit 0
-)
-setlocal EnableExtensions DisableDelayedExpansion
+- **Сетевые адаптеры Realtek**: Хотя адаптеры Realtek широко распространены и доступны по более низкой цене, они могут не поддерживать все функции, которые обеспечивают более эффективное управление энергией и производительностью, что делает их менее предпочтительными для высоконагруженных задач.
 
-for /f %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}" /v "*SpeedDuplex" /s ^| findstr  "HKEY"') do (
-    for /f %%i in ('reg query "%%a" /v "*DeviceSleepOnDisconnect" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*DeviceSleepOnDisconnect" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "*EEE" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*EEE" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "*ModernStandbyWoLMagicPacket" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*ModernStandbyWoLMagicPacket" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "*SelectiveSuspend" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*SelectiveSuspend" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "*WakeOnMagicPacket" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*WakeOnMagicPacket" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "*WakeOnPattern" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "*WakeOnPattern" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "AutoPowerSaveModeEnabled" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "AutoPowerSaveModeEnabled" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "EEELinkAdvertisement" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "EEELinkAdvertisement" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "EeePhyEnable" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "EeePhyEnable" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "EnableGreenEthernet" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "EnableGreenEthernet" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "EnableModernStandby" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "EnableModernStandby" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "GigaLite" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "GigaLite" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "PnPCapabilities" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "PnPCapabilities" /t REG_DWORD /d "24" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "PowerDownPll" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "PowerDownPll" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "PowerSavingMode" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "PowerSavingMode" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "ReduceSpeedOnPowerDown" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "ReduceSpeedOnPowerDown" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "S5WakeOnLan" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "S5WakeOnLan" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "SavePowerNowEnabled" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "SavePowerNowEnabled" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "ULPMode" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "ULPMode" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "WakeOnLink" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "WakeOnLink" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "WakeOnSlot" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "WakeOnSlot" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-    for /f %%i in ('reg query "%%a" /v "WakeUpModeCap" ^| findstr "HKEY"') do (
-        Reg.exe add "%%i" /v "WakeUpModeCap" /t REG_SZ /d "0" /f >nul 2>&1
-    )
-) >nul 2>&1
-cls
-powershell disable-netadapterbinding -name "*" -componentid vmware_bridge, ms_lldp, ms_lltdio, ms_implat, ms_tcpip6, ms_rspndr, ms_server, ms_msclient
-cls
-SETLOCAL EnableDelayedExpansion
-for /f "tokens=1,2*" %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002bE10318}" /s /v "*IfType"^| findstr /i "HKEY 0x6"') do if /i "%%i" neq "*IfType" (set REGPATH_ETHERNET=%%i) else (
-    reg add "!REGPATH_ETHERNET!" /v "*DeviceSleepOnDisconnect" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*FlowControl" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*InterruptModeration" /t REG_SZ /d "1" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*IPChecksumOffloadIPv4" /t REG_SZ /d "3" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*JumboPacket" /t REG_SZ /d "1514" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*LsoV1IPv4" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*LsoV2IPv4" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*LsoV2IPv6" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*ModernStandbyWoLMagicPacket" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*PriorityVLANTag" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*RSS" /t REG_SZ /d "1" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*RssBaseProcNumber" /t REG_SZ /d "1" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*RssMaxProcNumber" /t REG_SZ /d "1" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*SpeedDuplex" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*TCPChecksumOffloadIPv4" /t REG_SZ /d "3" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*TCPChecksumOffloadIPv6" /t REG_SZ /d "3" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*UDPChecksumOffloadIPv4" /t REG_SZ /d "3" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*UDPChecksumOffloadIPv6" /t REG_SZ /d "3" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*WakeOnMagicPacket" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "*WakeOnPattern" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_ETHERNET!" /v "ITR" /t REG_SZ /d "65535" /f 
-    reg add "!REGPATH_ETHERNET!" /v "TxIntDelay" /t REG_SZ /d "5" /f 
+### 2. Основные параметры настройки
 
-    reg query "!REGPATH_ETHERNET!" /v "ProviderName" | findstr "Intel" 
-    if !ERRORLEVEL! equ 0 (
-        reg add "!REGPATH_ETHERNET!" /v "AdaptiveIFS" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "AutoPowerSaveModeEnabled" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "EEELinkAdvertisement" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "EnablePME" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "EnableTss" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "LinkNegotiationProcess" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_ETHERNET!" /v "LogLinkStateEvent" /t REG_SZ /d "16" /f 
-        reg add "!REGPATH_ETHERNET!" /v "MasterSlave" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "ULPMode" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "ReduceSpeedOnPowerDown" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "SavePowerNowEnabled" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "SipsEnabled" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "WaitAutoNegComplete" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "WakeOnLink" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "WakeOnSlot" /t REG_SZ /d "0" /f 
-    )
-    reg query "!REGPATH_ETHERNET!" /v "ProviderName" | findstr "Realtek" 
-    if !ERRORLEVEL! equ 0 (
-        reg add "!REGPATH_ETHERNET!" /v "*EEE" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "AdvancedEEE" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "AutoDisableGigabit" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "EnableGreenEthernet" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "GigaLite" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "PowerSavingMode" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "S5WakeOnLan" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_ETHERNET!" /v "WolShutdownLinkSpeed" /t REG_SZ /d "2" /f 
-    )
-)
-call:POWERSHELL "$NetAdapters = Get-NetAdapterHardwareInfo | Get-NetAdapter | Where-Object {$_.Status -eq 'Up'};foreach ($NetAdapter in $NetAdapters) {$MaxNumRssQueues = [int](($NetAdapter | Get-NetAdapterAdvancedProperty -RegistryKeyword '*NumRssQueues').ValidRegistryValues | Measure-Object -Maximum).Maximum;$NetAdapter | Set-NetAdapterAdvancedProperty -RegistryKeyword '*NumRssQueues' -RegistryValue $MaxNumRssQueues}"
-call:POWERSHELL "$NetAdapters = Get-NetAdapterHardwareInfo | Get-NetAdapter | Where-Object {$_.Status -eq 'Up'};foreach ($NetAdapter in $NetAdapters) {$iReceiveBuffers = [int]($NetAdapter | Get-NetAdapterAdvancedProperty -RegistryKeyword '*ReceiveBuffers').NumericParameterMaxValue;$iTransmitBuffers = [int]($NetAdapter | Get-NetAdapterAdvancedProperty -RegistryKeyword '*TransmitBuffers').NumericParameterMaxValue;$NetAdapter | Set-NetAdapterAdvancedProperty -RegistryKeyword '*ReceiveBuffers' -RegistryValue $iReceiveBuffers;$NetAdapter | Set-NetAdapterAdvancedProperty -RegistryKeyword '*TransmitBuffers' -RegistryValue $iTransmitBuffers}"
-for /f "tokens=1,2*" %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002bE10318}" /s /v "*IfType"^| findstr /i "HKEY 0x47"') do if /i "%%i" neq "*IfType" (set REGPATH_WIFI=%%i) else (
-    reg add "!REGPATH_WIFI!" /v "*DeviceSleepOnDisconnect" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*PacketCoalescing" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*PMARPOffload" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*PMNSOffload" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*PMWiFiRekeyOffload" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*PriorityVLANTag" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*WakeOnMagicPacket" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "*WakeOnPattern" /t REG_SZ /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "WirelessMode" /t REG_SZ /d "34" /f
-    reg add "!REGPATH_WIFI!" /v "ScanWhenAssociated" /t REG_DWORD /d "0" /f 
-    reg add "!REGPATH_WIFI!" /v "ScanDisableOnLowTraffic" /t REG_DWORD /d "1" /f
-    reg add "!REGPATH_WIFI!" /v "ScanDisableOnMediumTraffic" /t REG_DWORD /d "1" /f 
-    reg add "!REGPATH_WIFI!" /v "ScanDisableOnHighOrMulticast" /t REG_DWORD /d "1" /f 
-    reg add "!REGPATH_WIFI!" /v "ScanDisableOnLowLatencyOrQos" /t REG_DWORD /d "1" /f 
+#### 2.1. Энергосбережение
 
-    reg query "!REGPATH_WIFI!" /v "ProviderName" | findstr "Intel" 
-    if !ERRORLEVEL! equ 0 (
-        reg add "!REGPATH_WIFI!" /v "BgScanGlobalBlocking" /t REG_SZ /d "2" /f 
-        reg add "!REGPATH_WIFI!" /v "CtsToItself" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_WIFI!" /v "FatChannelIntolerant" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "IbssQosEnabled" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "IbssTxPower" /t REG_SZ /d "100" /f 
-        reg add "!REGPATH_WIFI!" /v "MIMOPowerSaveMode" /t REG_SZ /d "3" /f 
-        reg add "!REGPATH_WIFI!" /v "RoamAggressiveness" /t REG_SZ /d "0" /f
-        reg add "!REGPATH_WIFI!" /v "ThroughputBoosterEnabled" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_WIFI!" /v "PropPacketBurstEnabled" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_WIFI!" /v "uAPSDSupport" /t REG_SZ /d "0" /f
-    )
-    reg query "!REGPATH_WIFI!" /v "ProviderName" | findstr "Realtek"
-    if !ERRORLEVEL! equ 0 (
-        reg add "!REGPATH_WIFI!" /v "ARPOffloadEnable" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "b40Intolerant" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "bLeisurePs" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "GTKOffloadEnable" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "InactivePs" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "NSOffloadEnable" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "ProtectionMode" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_WIFI!" /v "RegROAMSensitiveLevel" /t REG_SZ /d "127" /f 
-        reg add "!REGPATH_WIFI!" /v "RTD3Enable" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "TxPwrLevel" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "WakeOnDisconnect" /t REG_SZ /d "1" /f 
-        reg add "!REGPATH_WIFI!" /v "WoWLANLPSLevel" /t REG_SZ /d "0" /f 
-        reg add "!REGPATH_WIFI!" /v "WoWLANS5Support" /t REG_SZ /d "0" /f 
-    )
-)
-pause
-```
+- **GIGABIT LITE**: Эта функция позволяет адаптеру работать на скорости до 1 Гбит/с, обеспечивая при этом оптимальное энергопотребление. Это особенно полезно для домашних пользователей и малых офисов.
 
-- **Эти рекомендации направлены на оптимизацию производительности сети и снижение задержек. За более подробной информацией и пояснениями обращайтесь к руководствам Realtek, Intel и Microsoft по настройке производительности сетевой подсистемы, доступным в разделе «Технические ссылки».**
+- **GIGABIT ETHERNET**: Поддержка гигабитного Ethernet позволяет адаптеру передавать данные на высокой скорости, что критично для потокового видео и онлайн-игр.
+
+- **DISABLED ADVANCED EEE**: Отключение расширенного режима энергосбережения может улучшить производительность в условиях высокой нагрузки, так как адаптер не будет переходить в режим низкого энергопотребления.
+
+- **ENERGY EFFICIENT ETHERNET (EEE)**: Эта функция позволяет адаптеру переходить в режим низкого энергопотребления между всплесками сетевого трафика. Однако для экономии энергии оба конца соединения должны поддерживать EEE. Это может привести к небольшой задержке при восстановлении полной мощности.
+
+- **SYSTEM IDLE POWER SAVER**: Этот режим помогает снизить потребление энергии, когда система простаивает, что может быть полезно для ноутбуков и других мобильных устройств.
+
+- **POWER SAVING MODE**: Режим энергосбережения, который может быть полезен для снижения общего потребления энергии, особенно в условиях, когда не требуется высокая скорость передачи данных.
+
+- **ULTRA LOW POWER MODE**: Позволяет адаптеру работать в режиме минимального энергопотребления, что может быть полезно для мобильных устройств, продлевая время работы от батареи.
+
+- **REDUCE SPEED ON POWER DOWN**: Снижение скорости передачи данных при отключении питания может помочь сохранить ресурсы и предотвратить перегрев адаптера.
+
+- **SELECTIVE SUSPEND**: Позволяет адаптеру приостанавливать работу, когда он не используется, что также способствует экономии энергии.
+
+#### 2.2. Управление трафиком
+
+- **Adaptive Inter-Frame Spacing**: Эта настройка помогает компенсировать чрезмерные коллизии Ethernet-пакетов в сети. По умолчанию она работает лучше всего для большинства компьютеров и сетей. Включение этой функции позволяет адаптеру динамически адаптироваться к условиям сетевого трафика.
+
+- **Flow Control**: Включение этой функции позволяет адаптерам более эффективно регулировать трафик. Адаптеры генерируют кадры управления потоком, когда их очереди приема достигают предопределенного лимита. Это помогает предотвратить потерю пакетов, особенно в условиях высокой нагрузки.
+
+#### 2.3. Оптимизация производительности
+
+- **IPv4 Checksum Offload**: Эта настройка позволяет адаптеру вычислять контрольную сумму IPv4 для входящих и исходящих пакетов. Это улучшает производительность приема и передачи IPv4 и снижает использование CPU. При отключении Offloading операционная система проверяет контрольную сумму, что может увеличить нагрузку на процессор.
+
+- **Large Send Offload (IPv4 и IPv6)**: Эта функция позволяет адаптеру сегментировать TCP-сообщения в действительные Ethernet-кадры. Максимальный размер кадра для Large Send Offload составляет 64,000 байт. Поскольку аппаратное обеспечение адаптера может выполнять сегментацию данных гораздо быстрее, чем программное обеспечение операционной системы, эта функция может значительно улучшить производительность передачи и снизить использование ресурсов CPU.
+
+- **Log Link State Event**: Эта настройка позволяет включать или отключать ведение журнала изменений состояния соединения. Если включено, события изменения состояния соединения (например, "ссылка установлена" или "ссылка разорвана) будут записываться в системный журнал событий. Это может быть полезно для администраторов, чтобы отслеживать состояние сетевого соединения и выявлять возможные проблемы. В журнале фиксируются следующие события:
+  - Ссылка установлена.
+  - Ссылка разорвана.
+  - Несоответствие в дуплексе.
+  - Обнаружен протокол Spanning Tree.
+
+- **Priority and VLAN**: Эта функция позволяет отправлять и получать кадры с тегами IEEE 802.3ac, включая теги 802.1p для приоритета и теги 802.1Q для VLAN. При включении этой функции теги пакетов используют настройки очередей, определенные операционной системой. Однако стоит отметить, что изменение этих параметров может не оказать значительного влияния на производительность, так как они часто являются плацебо.
+
+- **PTP Hardware Timestamp**: Эта настройка позволяет приложениям, использующим PTPv2 (Precision Time Protocol), использовать аппаратные временные метки для синхронизации часов в вашей сети. Если эта настройка включена, она имеет приоритет над программной временной меткой.
+
+#### 2.4. Улучшение производительности системы
+
+- **Receive Side Scaling (RSS)**: Эта технология позволяет эффективно распределять обработку входящего сетевого трафика между несколькими процессорами в многопроцессорных системах. RSS помогает уменьшить задержки обработки, перераспределяя нагрузку на несколько ЦП, что предотвращает перегрузку одного из них. Основные преимущества RSS включают:
+  - **Распределенная обработка**: Обработка входящих данных распределяется между несколькими ЦП, что повышает общую производительность системы.
+  - **Обработка в порядке поступления**: RSS сохраняет порядок доставки полученных пакетов, что важно для некоторых приложений.
+  - **Динамическое балансирование нагрузки**: RSS позволяет перераспределять сетевую нагрузку между ЦП в зависимости от текущей нагрузки системы.
+  - **Поддержка MSI-X**: RSS с поддержкой MSI-X позволяет уменьшить накладные расходы на блокировку и перезагрузку кэшей, что также улучшает производительность.
+
+### 3. Рекомендации по настройке
+
+1. **Оставьте все параметры с Offload включенными**: Это позволит адаптерам более эффективно обрабатывать сетевой трафик и снизить нагрузку на систему.
+
+2. **Используйте адаптеры Intel для высокопроизводительных задач**: Если вы планируете использовать сетевое соединение для ресурсоемких задач, таких как потоковая передача видео в высоком разрешении, онлайн-игры или работа с большими объемами данных, адаптеры Intel обеспечат более стабильное и быстрое соединение по сравнению с Realtek.
+
+3. **Настройте параметры энергосбережения в зависимости от ваших нужд**: Если вы используете ноутбук или другое мобильное устройство, включение режимов энергосбережения, таких как **SYSTEM IDLE POWER SAVER** и **ULTRA LOW POWER MODE**, может значительно продлить время работы от батареи. Однако для стационарных ПК, работающих в условиях высокой нагрузки, может быть целесообразно отключить некоторые из этих функций для повышения производительности.
+
+4. **Следите за обновлениями драйверов**: Регулярное обновление драйверов для сетевых адаптеров Intel и Realtek может улучшить производительность и стабильность соединения. Производители часто выпускают обновления, которые исправляют ошибки и добавляют новые функции.
+
+5. **Тестируйте производительность**: Используйте инструменты для тестирования скорости интернета и потери пакетов, чтобы оценить производительность вашего сетевого адаптера. Это поможет вам определить, какие настройки работают лучше всего в вашей конкретной среде.
+
+
+Сетевые адаптеры Intel и Realtek имеют свои преимущества и недостатки. Адаптеры Intel, как правило, предлагают более высокую производительность и лучшее управление энергией, что делает их предпочтительным выбором для пользователей, которым требуется надежное и быстрое соединение. В то время как адаптеры Realtek могут быть более доступными, они могут не обеспечивать такую же стабильность и функциональность, особенно в условиях высокой нагрузки.
+
+При настройке сетевых адаптеров важно учитывать ваши конкретные потребности и условия использования. Правильная конфигурация параметров энергосбережения и управления трафиком может значительно улучшить производительность и эффективность вашего сетевого соединения.
 
 ## 7. Дополнительные рекомендации по настройке
 
@@ -308,112 +186,6 @@ pause
 - **Следите за показателями**: Обратите внимание на задержку и пропускную способность, чтобы найти оптимальные настройки для вашей системы.
 - **Документируйте изменения**: Ведите записи о внесенных изменениях, чтобы в будущем можно было легко откатить настройки при необходимости.
 
-### Сетевые протоколы
-
-### Настройки для оптимизации сетевых протоколов
-
-Оптимизация сетевых протоколов является важной задачей для повышения производительности и надежности сетевых соединений. Одним из подходов к этой оптимизации является использование технологии NestH, которая может значительно снизить задержки в интернете и улучшить работу TCP-программ.
-
-NestH (Network Enhanced Streaming and Transport for High-performance) представляет собой набор методов и инструментов, направленных на улучшение передачи данных по сети. Основная цель этой технологии — минимизация задержек, возникающих из-за различных факторов, таких как перегрузка сети, потеря пакетов и неэффективное использование пропускной способности.
-
-Ключевым аспектом NestH является адаптивное управление потоком данных, позволяющее динамически регулировать скорость передачи в зависимости от текущих условий сети. Это особенно важно для TCP-программ, которые могут страдать от задержек и потерь пакетов. Используя алгоритмы предсказания и анализа, NestH может заранее определять оптимальные параметры передачи, что приводит к более стабильному и быстрому соединению.
-
-Кроме того, NestH включает механизмы для улучшения обработки ошибок и восстановления после потерь пакетов, что позволяет TCP-программам более эффективно реагировать на проблемы в сети, минимизируя время простоя и улучшая общую производительность.
-
-Внедрение технологий, подобных NestH, может существенно повысить качество интернет-соединений, что особенно актуально в условиях растущих требований к скорости и надежности передачи данных. Оптимизация сетевых протоколов через такие решения не только улучшает работу существующих приложений, но и открывает новые возможности для разработки более сложных и требовательных к ресурсам сервисов.
-
-## Настройки Netsh
-
-Для оптимизации сетевых протоколов в Windows используйте следующие команды:
-
-```bat
-netsh int tcp set global autotuninglevel=normal
-netsh int tcp set heuristics disabled
-netsh int tcp set global chimney=disabled
-netsh int tcp set global netdma=disabled
-netsh int tcp set global dca=enabled
-netsh int tcp set global rss=enabled
-netsh int tcp set global rsc=disabled
-netsh int tcp set global ecncapability=default
-netsh int tcp set global timestamps=disabled
-netsh int tcp set global initialRto=2000
-```
-
-### 1. `netsh int tcp set global autotuninglevel=normal`
-- **Описание**: Управляет автоматическим регулированием окна TCP. Установка значения `normal` позволяет системе автоматически настраивать размер окна в зависимости от условий сети.
-- **Рекомендация**: Используйте это значение для большинства сценариев, так как оно обеспечивает баланс между производительностью и стабильностью.
-
-### 2. `netsh int tcp set heuristics disabled`
-- **Описание**: Отключает эвристические алгоритмы, которые могут влиять на поведение TCP.
-- **Рекомендация**: Отключение эвристик может быть полезно в средах с предсказуемыми условиями сети.
-
-### 3. `netsh int tcp set global chimney=disabled`
-- **Описание**: Отключает поддержку TCP Chimney Offload, снижая нагрузку на процессор.
-- **Рекомендация**: Отключение может быть полезно при проблемах с совместимостью или производительностью.
-
-### 4. `netsh int tcp set global netdma=disabled`
-- **Описание**: Отключает поддержку Network Direct Memory Access (NetDMA).
-- **Рекомендация**: Отключение может помочь избежать проблем с совместимостью, но может снизить производительность в некоторых сценариях.
-
-### 5. `netsh int tcp set global dca=enabled`
-- **Описание**: Включает Data Center Bridging (DCA) для оптимизации обработки трафика в дата-центрах.
-- **Рекомендация**: Рекомендуется включать в средах с поддержкой DCA.
-
-### 6. `netsh int tcp set global rss=enabled`
-- **Описание**: Включает Receive Side Scaling (RSS) для распределения входящего трафика между несколькими процессорами.
-- **Рекомендация**: Включение RSS рекомендуется для многопроцессорных систем.
-
-### 7. `netsh int tcp set global rsc=disabled`
-- **Описание**: Отключает Receive Segment Coalescing (RSC).
-- **Рекомендация**: Отключение может быть полезно при проблемах с производительностью или совместимостью.
-
-### 8. `netsh int tcp set global ecncapability=default`
-- **Описание**: Устанавливает возможность использования Explicit Congestion Notification (ECN).
-- **Рекоменда### 8. `netsh int tcp set global ecncapability=default`
-- **Описание**: Устанавливает возможность использования Explicit Congestion Notification (ECN), который позволяет сетям сигнализировать о перегрузках.
-- **Рекомендация**: Оставьте значение по умолчанию, если не уверены в необходимости использования ECN.
-
-### 9. `netsh int tcp set global timestamps=disabled`
-- **Описание**: Отключает использование временных меток в TCP, которые могут использоваться для улучшения управления потоком и обнаружения потерь.
-- **Рекомендация**: Отключение может помочь в некоторых случаях, но может снизить производительность в других.
-
-### 10. `netsh int tcp set global initialRto=2000`
-- **Описание**: Устанавливает начальное значение времени ожидания повторной передачи (RTO) в миллисекундах. Значение 2000 означает, что система будет ожидать 2 секунды перед повторной передачей потерянного пакета.
-- **Рекомендация**: Настройка этого параметра может помочь в сетях с высокой задержкой, но может увеличить время восстановления в случае потерь.
-
-## Настройка TCP CongestionProvider
-
-Для настройки параметров CongestionProvider в зависимости от версии Windows используйте следующие команды:
-
-### Windows 10
-
-```bat
-netsh int tcp set supplemental Template=Internet CongestionProvider=DCTCP
-netsh int tcp set supplemental Template=Datacenter CongestionProvider=DCTCP
-netsh int tcp set supplemental Template=Compat CongestionProvider=DCTCP
-netsh int tcp set supplemental Template=DatacenterCustom CongestionProvider=DCTCP
-netsh int tcp set supplemental Template=InternetCustom CongestionProvider=DCTCP
-netsh int tcp set supplemental Template=Automatic CongestionProvider=DCTCP
-
-Get-NetTCPSetting | Select SettingName, CongestionProvider
-```
-
-### Windows 11
-
-```bat
-netsh int tcp set supplemental Template=Internet CongestionProvider=bbr2
-netsh int tcp set supplemental Template=Datacenter CongestionProvider=bbr2
-netsh int tcp set supplemental Template=Compat CongestionProvider=bbr2
-netsh int tcp set supplemental Template=DatacenterCustom CongestionProvider=bbr2
-netsh int tcp set supplemental Template=InternetCustom CongestionProvider=bbr2
-netsh int tcp set supplemental Template=Automatic CongestionProvider=bbr2
-
-Get-NetTCPSetting | Select SettingName, CongestionProvider
-```
-
-Эти параметры могут быть полезны для настройки TCP в Windows в зависимости от специфики вашей сети и приложений. Рекомендуется тестировать изменения в контролируемой среде, чтобы определить, какие настройки обеспечивают наилучшие результаты для ваших нужд. 
-
-Оптимизация сетевых протоколов и правильная настройка параметров TCP могут значительно улучшить производительность сетевых соединений. Используйте предложенные команды и рекомендации для достижения наилучших результатов в вашей среде.
 
 ### Библиотека групповых политик
 
