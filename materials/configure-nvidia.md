@@ -24,11 +24,12 @@
 
 
 - И удалите папку с названием GFExperience. В файле `setup.cfg` удалите следующие строки:
-``
+
+```
 <file name="${{EulaHtmlFile}}"/>
 <file name="${{FunctionalConsentFile}}"/>
 <file name="${{PrivacyPolicyFile}}"/>
-``
+```
 
 ---
 
